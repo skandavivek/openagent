@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OpenAgent (mock) — Agent Demo</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Icon + food-illustration sprite. Everything below is rendered inline as
+     SVG (no emoji, no external images) so the look is identical on any
+     machine/projector regardless of installed fonts. -->
+<svg style="display:none" aria-hidden="true">
+<defs>
+  <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+    <line x1="16" y1="2" x2="16" y2="6"></line>
+    <line x1="8" y1="2" x2="8" y2="6"></line>
+    <line x1="3" y1="10" x2="21" y2="10"></line>
+  </symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+    <polyline points="12 6 12 12 16 14"></polyline>
+  </symbol>
+  <symbol id="icon-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+  </symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </symbol>
+  <symbol id="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+    <circle cx="12" cy="10" r="3"></circle>
+  </symbol>
+  <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+  </symbol>
+  <symbol id="icon-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="8" width="18" height="4"></rect>
+    <path d="M12 8v13"></path>
+    <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+    <path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"></path>
+  </symbol>
+  <symbol id="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+  </symbol>
+  <symbol id="icon-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+  </symbol>
+  <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+  </symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </symbol>
+
+</defs>
+</svg>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="#">Mobile ⌄</a>
+    <a href="#">For Businesses</a>
+    <a href="#">FAQs</a>
+    <a href="#">EN ⌄</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-left">
+    <span class="logo-dot"></span>
+    <span class="logo-text">OpenAgent</span>
+    <span class="location-picker"><svg class="icon"><use href="#icon-pin"></use></svg> New York <span class="chev">⌄</span></span>
+  </div>
+  <div class="header-right">
+    <span class="avatar">SV</span>
+    <span class="icon-btn" title="Reservations"><svg class="icon"><use href="#icon-calendar"></use></svg></span>
+    <span class="icon-btn" title="Notifications"><svg class="icon"><use href="#icon-bell"></use></svg><span class="dot-badge"></span></span>
+    <span class="icon-btn" title="Gift cards"><svg class="icon"><use href="#icon-gift"></use></svg></span>
+    <span class="icon-btn" title="Search"><svg class="icon"><use href="#icon-search"></use></svg></span>
+  </div>
+</header>
+
+<section class="search-row-wrap">
+  <div class="search-row">
+    <div class="field"><svg class="icon"><use href="#icon-calendar"></use></svg> Jul 31 <span class="chev">⌄</span></div>
+    <div class="field"><svg class="icon"><use href="#icon-clock"></use></svg> 6:00 PM <span class="chev">⌄</span></div>
+    <div class="field"><svg class="icon"><use href="#icon-person"></use></svg> 2 people <span class="chev">⌄</span></div>
+    <div class="field grow">
+      <svg class="icon"><use href="#icon-search"></use></svg>
+      <input type="text" placeholder="Location, Restaurant, or Cuisine" disabled />
+    </div>
+    <button class="go-btn" disabled>Let's go</button>
+  </div>
+  <div class="location-hint">
+    It looks like you're in New York. Not correct?
+    <a href="#"><svg class="icon"><use href="#icon-pin"></use></svg> Get current location</a>
+  </div>
+</section>
+
+<section class="promo-banner">
+  <div class="promo-text">
+    <span class="promo-badge">NEW</span>
+    <h2>Ask our AI concierge</h2>
+    <p>Skip the filters — tell the chat assistant what you're craving and when.
+      It can search restaurants, check real-time availability, and book the
+      table for you.</p>
+    <button id="promo-cta" class="promo-cta">Try it now ↓</button>
+  </div>
+</section>
+
+<main>
+  <div class="section-header">
+    <h2>Available for dinner now</h2>
+    <a href="#" class="view-all">View all</a>
+  </div>
+  <div class="grid" id="restaurant-grid">
+    <!-- Mirrors data/seed_db.py so the chatbot's answers match what's on screen -->
+    <div class="card">
+      <div class="thumb"><img src="images/italian.jpg" alt="Pasta dish at Nonna's Table" loading="lazy"></div>
+      <div class="body">
+        <h3>Nonna's Table</h3>
+        <div class="rating-row"><span class="stars">★★★★★</span><span class="review-count">2,014 reviews</span></div>
+        <div class="meta">Italian · $$$ · West Village</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 32 times today</div>
+        <div class="time-pills">
+          <button class="pill">7:00 PM</button>
+          <button class="pill">7:30 PM</button>
+          <button class="pill">8:15 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/japanese.jpg" alt="Sushi platter at Sakura Robata" loading="lazy"></div>
+      <div class="body">
+        <h3>Sakura Robata</h3>
+        <div class="rating-row"><span class="stars">★★★★★</span><span class="review-count">3,481 reviews</span></div>
+        <div class="meta">Japanese · $$$$ · Midtown East</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 54 times today</div>
+        <div class="time-pills">
+          <button class="pill">6:30 PM</button>
+          <button class="pill">8:00 PM</button>
+          <button class="pill">9:00 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/mexican.jpg" alt="Tacos at El Patio Verde" loading="lazy"></div>
+      <div class="body">
+        <h3>El Patio Verde</h3>
+        <div class="rating-row"><span class="stars">★★★★☆</span><span class="review-count">986 reviews</span></div>
+        <div class="meta">Mexican · $$ · Williamsburg</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 41 times today</div>
+        <div class="time-pills">
+          <button class="pill">7:15 PM</button>
+          <button class="pill">7:45 PM</button>
+          <button class="pill">9:30 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/american.jpg" alt="Steak dinner at The Copper Whisk" loading="lazy"></div>
+      <div class="body">
+        <h3>The Copper Whisk</h3>
+        <div class="rating-row"><span class="stars">★★★★★</span><span class="review-count">1,527 reviews</span></div>
+        <div class="meta">American · $$$ · Flatiron</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 26 times today</div>
+        <div class="time-pills">
+          <button class="pill">6:45 PM</button>
+          <button class="pill">8:30 PM</button>
+          <button class="pill">9:15 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/indian.jpg" alt="Curry dish at Spice Route" loading="lazy"></div>
+      <div class="body">
+        <h3>Spice Route</h3>
+        <div class="rating-row"><span class="stars">★★★★☆</span><span class="review-count">712 reviews</span></div>
+        <div class="meta">Indian · $$ · East Village</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 19 times today</div>
+        <div class="time-pills">
+          <button class="pill">7:00 PM</button>
+          <button class="pill">7:30 PM</button>
+          <button class="pill">8:45 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/french.jpg" alt="Coq au vin at Le Petit Bistro" loading="lazy"></div>
+      <div class="body">
+        <h3>Le Petit Bistro</h3>
+        <div class="rating-row"><span class="stars">★★★★★</span><span class="review-count">4,290 reviews</span></div>
+        <div class="meta">French · $$$$ · Upper West Side</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 63 times today</div>
+        <div class="time-pills">
+          <button class="pill">6:00 PM</button>
+          <button class="pill">7:30 PM</button>
+          <button class="pill">8:00 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/chinese.jpg" alt="Dumplings at Golden Dragon" loading="lazy"></div>
+      <div class="body">
+        <h3>Golden Dragon</h3>
+        <div class="rating-row"><span class="stars">★★★★☆</span><span class="review-count">1,102 reviews</span></div>
+        <div class="meta">Chinese · $$ · Chinatown</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 22 times today</div>
+        <div class="time-pills">
+          <button class="pill">6:30 PM</button>
+          <button class="pill">7:45 PM</button>
+          <button class="pill">9:00 PM</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumb"><img src="images/mediterranean.jpg" alt="Mezze platter at Basil &amp; Vine" loading="lazy"></div>
+      <div class="body">
+        <h3>Basil &amp; Vine</h3>
+        <div class="rating-row"><span class="stars">★★★★★</span><span class="review-count">1,839 reviews</span></div>
+        <div class="meta">Mediterranean · $$$ · SoHo</div>
+        <div class="booked-today"><svg class="icon-sm"><use href="#icon-flame"></use></svg> Booked 37 times today</div>
+        <div class="time-pills">
+          <button class="pill">7:00 PM</button>
+          <button class="pill">8:15 PM</button>
+          <button class="pill">9:30 PM</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Chat widget -->
+<button id="chat-toggle" aria-label="Open concierge chat">
+  <svg class="icon"><use href="#icon-chat"></use></svg>
+</button>
+<div id="chat-panel">
+  <div id="chat-header">
+    <div>OpenAgent Concierge
+      <span class="sub">Ask me to find a table or book one</span>
+    </div>
+    <button id="chat-close" aria-label="Close chat"><svg class="icon"><use href="#icon-close"></use></svg></button>
+  </div>
+  <div id="chat-messages"></div>
+  <div id="chat-input-row">
+    <input id="chat-input" type="text" placeholder="e.g. Book Italian for 2 tonight at 7" autocomplete="off" />
+    <button id="chat-send">Send</button>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
