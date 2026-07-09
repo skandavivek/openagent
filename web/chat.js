@@ -90,6 +90,17 @@ function addToolTrace(toolCalls) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+function addTraceLink(url) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.className = "trace-link";
+  link.textContent = "View this turn's trace in Langfuse ->";
+  messagesEl.appendChild(link);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
@@ -117,6 +128,7 @@ async function sendMessage() {
     typingEl.remove();
     addToolTrace(data.tool_calls);
     addBotMessage(data.reply);
+    if (data.trace_url) addTraceLink(data.trace_url);
   } catch (err) {
     typingEl.remove();
     addBotMessage(

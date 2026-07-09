@@ -554,3 +554,15 @@ main {
   font-size: 13px;
   font-style: italic;
 }
+
+.trace-link {
+  align-self: flex-start;
+  color: var(--red-dark);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.trace-link:hover {
+  text-decoration: underline;
+}

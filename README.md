@@ -96,10 +96,47 @@ read tools in production, not just a confirmation step.
 
 ![Diagram of MCP tools and the data they touch: an MCP client calls into the MCP server's four tools (search_restaurants and get_availability as read-only, create_booking and cancel_booking as writes); read tools query the restaurants and availability tables, while each write tool both touches the bookings table and adjusts the availability table's seat count](docs/mcp-tools-data.svg)
 
+## Observability (Langfuse)
+
+`chat_service/main.py` is instrumented with [Langfuse](https://langfuse.com)
+(the real SDK, not a mock) so you can watch the harness loop above actually
+execute, call by call, in a live dashboard during the demo.
+
+**Session grouping.** A "session" in this app is just a browser page load
+(see `web/chat.js` — `sessionId = crypto.randomUUID()`, minted fresh on every
+refresh, never persisted). Every `/chat` call is its own Langfuse *trace*,
+but all traces sharing that same `session_id` are grouped into one Langfuse
+*session* (via `propagate_attributes(session_id=...)`), so a whole multi-turn
+conversation shows up as a single session in the dashboard instead of
+fragmented, disconnected traces — refresh the page and you start a new one,
+same as the conversation itself.
+
+**What's captured per turn:**
+- a root span (`chat_turn`) for the whole request, input = guest message,
+  output = final reply
+- one `generation` observation per Claude API call in that turn's loop
+  (model, full message history in, content blocks out, token usage) — a
+  single turn can have more than one if Claude calls a tool before answering
+- one `tool` observation per MCP tool call (args in, result out)
+
+The chat UI also surfaces a **"View this turn's trace in Langfuse"** link
+under each reply (`data.trace_url` from `langfuse.get_trace_url()`) so you
+can click straight from the live demo into the exact trace on screen.
+
+Add your project's keys to `chat_service/.env` to enable this (same file as
+`ANTHROPIC_API_KEY`):
+
+```
+LANGFUSE_PUBLIC_KEY=pk-lf-...
+LANGFUSE_SECRET_KEY=sk-lf-...
+LANGFUSE_BASE_URL=https://cloud.langfuse.com   # omit if using Langfuse Cloud (default)
+```
+
 ## What's real vs. mocked
 
 - **Real**: Claude tool-use loop, actual MCP protocol (official `mcp` SDK,
-  stdio transport), FastAPI microservice boundary, HTML/JS frontend.
+  stdio transport), FastAPI microservice boundary, HTML/JS frontend, Langfuse
+  observability.
 - **Mocked**: SQLite stands in for Elasticsearch/a booking DB — swap
   `mcp_server/server.py`'s `_connect()`/SQL for real ES + Postgres calls
   without changing the tool interface or anything upstream of it. Session
@@ -109,7 +146,7 @@ read tools in production, not just a confirmation step.
 
 ```bash
 uv venv --python 3.11 .venv
-uv pip install --python .venv mcp anthropic fastapi "uvicorn[standard]" python-dotenv
+uv pip install --python .venv mcp anthropic fastapi "uvicorn[standard]" python-dotenv langfuse
 uv pip install --python .venv -r evals/requirements.txt   # only needed to run evals/
 .venv/bin/python data/seed_db.py        # (re)build the mock restaurant DB
 export ANTHROPIC_API_KEY=sk-...
@@ -154,7 +191,9 @@ To sanity-check the MCP server in isolation (no LLM involved):
    definitions, then `chat_service/main.py`'s loop (call Claude → tool_use? →
    call MCP tool → feed result back → repeat). Emphasize the read/write
    boundary and where you'd add auth, rate limiting, idempotency keys, and
-   audit logging for production.
+   audit logging for production. Click a **"View this turn's trace in
+   Langfuse"** link from the live chat to show the whole session — every
+   Claude call and tool call from the demo, nested, in one dashboard.
 4. **(5 min) Tie to the course** — this demo took shortcuts (SQLite instead
    of ES, no auth, in-memory sessions) that the full course covers: context
    engineering (RAG/MCP/memory), and production reliability (deployment,

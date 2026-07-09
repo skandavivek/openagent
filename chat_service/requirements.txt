@@ -4,3 +4,4 @@ anthropic
 mcp
 pydantic
 python-dotenv
+langfuse
