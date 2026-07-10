@@ -173,33 +173,6 @@ To sanity-check the MCP server in isolation (no LLM involved):
 .venv/bin/python mcp_server/server.py   # should hang waiting on stdio — Ctrl+C to exit
 ```
 
-## Suggested 30-minute demo flow
-
-1. **(5 min) Frame the problem** — OpenAgent wants a chatbot so customers can
-   search and book without clicking through filters. Show the architecture
-   diagram above: UI → agent → tools → data. This is the shape of basically
-   every enterprise agent.
-2. **(10 min) Live demo** — Open the site, ask things like:
-   - "Find me a good Italian place in the West Village" → watch the
-     `search_restaurants` tool chip appear.
-   - "What times are open there tonight for 2 people?" → `get_availability`.
-   - "Book it for 7pm" → the agent restates the details and asks you to
-     confirm *before* calling `create_booking` — point this out explicitly.
-   - Try over-booking a slot (party of 8 into a 2-top) to show the write
-     tool rejecting it gracefully instead of the agent hallucinating success.
-3. **(10 min) Open the hood** — walk through `mcp_server/server.py` tool
-   definitions, then `chat_service/main.py`'s loop (call Claude → tool_use? →
-   call MCP tool → feed result back → repeat). Emphasize the read/write
-   boundary and where you'd add auth, rate limiting, idempotency keys, and
-   audit logging for production. Click a **"View this turn's trace in
-   Langfuse"** link from the live chat to show the whole session — every
-   Claude call and tool call from the demo, nested, in one dashboard.
-4. **(5 min) Tie to the course** — this demo took shortcuts (SQLite instead
-   of ES, no auth, in-memory sessions) that the full course covers: context
-   engineering (RAG/MCP/memory), and production reliability (deployment,
-   evals, monitoring). The `evals/` suite (see below) is a small taste of
-   the eval-driven-dev piece.
-
 ## Evals
 
 `evals/` is a small eval-driven-dev harness: 25 hand-written cases (search,
