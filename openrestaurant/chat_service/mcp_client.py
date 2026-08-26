@@ -10,7 +10,7 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 SERVER_SCRIPT = Path(__file__).parent.parent / "mcp_server" / "server.py"
-PYTHON_BIN = Path(__file__).parent.parent / ".venv" / "bin" / "python"
+PYTHON_BIN = Path(__file__).parent.parent.parent / ".venv" / "bin" / "python"
 
 
 class MCPToolClient:

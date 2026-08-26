@@ -1,4 +1,14 @@
-const API_BASE = "http://localhost:8000";
+// Codespaces forwards each port on its own hostname (e.g.
+// https://<name>-5500.app.github.dev), so a page served on port 5500 must
+// rewrite "localhost:8000" to that same pattern on port 8000 -- plain
+// "localhost" in the browser means the viewer's own machine, not the
+// container serving this page.
+const API_BASE = (() => {
+  const { hostname, protocol } = window.location;
+  const codespacesMatch = hostname.match(/^(.+)-\d+(\.app\.github\.dev)$/);
+  if (codespacesMatch) return `${protocol}//${codespacesMatch[1]}-8000${codespacesMatch[2]}`;
+  return "http://localhost:8000";
+})();
 
 const sessionId = crypto.randomUUID();
 

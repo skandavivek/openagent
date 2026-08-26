@@ -2,7 +2,14 @@
 __pycache__/
 *.pyc
 .env
-chat_service/.env
-data/restaurant_booking.db
+.ipynb_checkpoints
+*.egg-info/
 
-opentable screenshot.png
+# openrestaurant
+openrestaurant/chat_service/.env
+openrestaurant/data/restaurant_booking.db
+openrestaurant/opentable screenshot.png
+
+# open-deep-research
+open-deep-research/.langgraph_api/
+open-deep-research/credentials.json

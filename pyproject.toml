@@ -1,0 +1,46 @@
+[project]
+name = "openagent"
+version = "0.1.0"
+description = "AI Agents for Enterprise — openrestaurant/ (restaurant-booking demo) and open-deep-research/ (deep research agent tutorials), one combined codespace environment"
+requires-python = ">=3.11"
+dependencies = [
+    # open-deep-research
+    "langgraph>=0.5.4",
+    "langchain>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "langchain-anthropic>=0.3.0",
+    "langchain_community>=0.3.27",
+    "langchain_tavily>=0.2.7",
+    "langchain_mcp_adapters>=0.1.9",
+    "pydantic>=2.0.0",
+    "rich>=14.0.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.20.0",
+    "tavily-python>=0.5.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "requests>=2.32.0",
+    "qdrant-client>=1.7.0",
+    "langchain-qdrant>=0.1.0",
+    # openrestaurant
+    "anthropic>=0.40.0",
+    "mcp>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "langfuse>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.11.1", "ruff>=0.6.1"]
+
+[build-system]
+requires = ["setuptools>=73.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["deep_research_from_scratch"]
+
+[tool.setuptools.package-dir]
+"deep_research_from_scratch" = "open-deep-research/src/deep_research_from_scratch"
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]

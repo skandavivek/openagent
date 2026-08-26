@@ -20,7 +20,7 @@ their cell since there's no clean flat CSV shape for them.
 
 Usage:
     # chat_service must already be running on localhost:8000
-    .venv/bin/python evals/run_evals.py [--case-id ID]
+    .venv/bin/python openrestaurant/evals/run_evals.py [--case-id ID]
 """
 import argparse
 import csv
@@ -155,7 +155,7 @@ def main():
         requests.get("http://localhost:8000/health", timeout=5).raise_for_status()
     except requests.RequestException:
         print("chat_service isn't reachable at http://localhost:8000 -- start it first:")
-        print("  cd chat_service && ../.venv/bin/uvicorn main:app --port 8000")
+        print("  cd openrestaurant/chat_service && ../../.venv/bin/uvicorn main:app --port 8000")
         sys.exit(1)
 
     results = []
