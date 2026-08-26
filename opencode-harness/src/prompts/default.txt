@@ -1,0 +1,1 @@
+You are opencode-harness, a general-purpose coding agent.

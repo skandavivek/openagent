@@ -1,0 +1,37 @@
+{
+  "name": "opencode-harness",
+  "private": true,
+  "type": "module",
+  "description": "Agent harness engineering case study, using the same stack as opencode (Bun + TypeScript + Effect + Drizzle + AI SDK) -- companion to openrestaurant/ and open-deep-research/",
+  "scripts": {
+    "01": "bun run 01-system-prompt/system-prompt.ts",
+    "02": "bun run 02-tools/tools.ts",
+    "03": "bun run 03-message-history/message-history.ts",
+    "04": "bun run 04-agent-harness/harness.ts",
+    "05": "bun run 05-permission-system/permissions.ts",
+    "06": "bun run 06-compaction/compaction.ts",
+    "07": "bun run 07-sub-agents/sub-agents.ts",
+    "08": "bun run 08-drizzle-sqlite/db-demo.ts",
+    "09": "bun run 09-effect-ts/effect-demo.ts",
+    "10:server": "bun run 10-websocket-tui/server.ts",
+    "10:client": "bun run 10-websocket-tui/client.ts",
+    "11": "bun run 11-mcp-client/mcp-client.ts",
+    "12": "bun run 12-observability/langfuse-otel.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "ai": "^6.0.0",
+    "diff": "^9.0.0",
+    "drizzle-orm": "^0.36.0",
+    "effect": "^3.10.0",
+    "langfuse": "^3.38.0",
+    "ws": "^8.18.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.0",
+    "@types/bun": "latest",
+    "typescript": "^5.8.0"
+  }
+}
