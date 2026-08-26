@@ -45,8 +45,11 @@ Each of these picks up the topic-4 harness and extends one piece of it.
 Dependencies install automatically via this repo's root `.devcontainer/`
 (Bun + `bun install` + `ripgrep`, alongside the Python side for
 `openrestaurant`/`open-deep-research`) -- see the top-level README. Add your
-own `ANTHROPIC_API_KEY` (and `LANGFUSE_*` for topic 12) to
-`opencode-harness/.env`, same pattern as `openrestaurant/chat_service/.env`.
+own `ANTHROPIC_API_KEY` (and `LANGFUSE_*` for topic 12) to the repo-root
+`.env` -- shared with `openrestaurant`/`open-deep-research`, not a separate
+file here. Each topic's `package.json` script passes
+`--env-file=../.env` explicitly, since Bun's own `.env` auto-loading only
+checks the current working directory, not parent directories.
 
 Each numbered topic has its own `project/` sample directory it operates on
 (sandboxed only in the sense that it's a small throwaway directory, not a

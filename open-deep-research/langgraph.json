@@ -9,7 +9,7 @@
       "docs_assistant": "./src/deep_research_from_scratch/docs_assistant.py:docs_assistant"
     },
     "python_version": "3.11",
-    "env": ".env",
+    "env": "../.env",
     "dependencies": [
       "."
     ]

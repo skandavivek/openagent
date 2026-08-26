@@ -20,7 +20,7 @@ from pydantic import BaseModel
 
 from mcp_client import MCPToolClient
 
-load_dotenv()  # picks up chat_service/.env if present (ANTHROPIC_API_KEY=sk-..., LANGFUSE_*)
+load_dotenv()  # walks up from this file looking for .env -- finds the repo-root one (ANTHROPIC_API_KEY=sk-..., LANGFUSE_*), shared with opencode-harness/ and open-deep-research/
 
 MODEL = "claude-sonnet-5"
 

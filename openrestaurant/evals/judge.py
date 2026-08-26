@@ -10,7 +10,7 @@ from pathlib import Path
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent.parent / "chat_service" / ".env")
+load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")  # repo-root .env, shared across all 3 projects
 
 JUDGE_MODEL = "claude-haiku-4-5-20251001"
 

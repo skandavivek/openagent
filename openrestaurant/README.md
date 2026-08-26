@@ -126,8 +126,9 @@ The chat UI also surfaces a **"View this turn's trace in Langfuse"** link
 under each reply (`data.trace_url` from `langfuse.get_trace_url()`) so you
 can click straight from the live demo into the exact trace on screen.
 
-Add your project's keys to `openrestaurant/chat_service/.env` to enable this (same file as
-`ANTHROPIC_API_KEY`):
+Add your project's keys to the repo-root `.env` to enable this (same file as
+`ANTHROPIC_API_KEY` — see the top-level README's "One `.env`, shared by all
+three" section for why one file at the root covers this whole repo):
 
 ```
 LANGFUSE_PUBLIC_KEY=pk-lf-...

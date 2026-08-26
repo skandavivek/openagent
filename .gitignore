@@ -6,7 +6,6 @@ __pycache__/
 *.egg-info/
 
 # openrestaurant
-openrestaurant/chat_service/.env
 openrestaurant/data/restaurant_booking.db
 openrestaurant/opentable screenshot.png
 
@@ -15,6 +14,5 @@ open-deep-research/.langgraph_api/
 open-deep-research/credentials.json
 
 # opencode-harness
-opencode-harness/.env
 opencode-harness/node_modules/
 opencode-harness/**/*.db
