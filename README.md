@@ -1,7 +1,6 @@
 # openagent
 
-AI agent course repo — teaching material for "Build AI Agents for
-Enterprises" and other courses. One Codespace, three case studies:
+AI agent course repo. One Codespace, three case studies:
 
 ```
 openagent/
