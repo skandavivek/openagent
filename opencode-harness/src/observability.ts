@@ -1,8 +1,16 @@
 // Topic 12: Observability -- real langfuse JS SDK, same account/keys as
 // openrestaurant's Python instrumentation (openrestaurant/README.md's
-// "Observability (Langfuse)" section) -- literally the same underlying
-// mechanism opencode itself relies on: `langfuse` is a direct dependency in
-// opencode's own package.json, not something bolted on for this course.
+// "Observability (Langfuse)" section).
+//
+// CORRECTION: an earlier version of this comment claimed `langfuse` is a
+// real dependency of opencode's own package.json. That was wrong -- checked
+// directly against the actual anomalyco/opencode repo (both origin/dev and
+// GitHub code search) and `langfuse` appears nowhere in it. What I'd found
+// was substantial hand-written Langfuse integration code sitting as
+// uncommitted, never-pushed local changes in a stray clone on this machine
+// -- leftover prototype work, not part of the real project. Langfuse here
+// is a standard, common real-world choice for LLM observability (same
+// reason openrestaurant uses it), not something opencode itself does.
 //
 // This hooks into the harness loop via the SAME onEvent callback topic 10
 // (WebSocket/TUI) uses -- the harness doesn't know or care whether its

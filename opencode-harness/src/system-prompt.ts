@@ -1,14 +1,24 @@
 // Topic 1: System prompt assembly.
 //
 // Faithful to opencode's real split across
-// packages/opencode/src/session/system.ts + instruction.ts + prompt.ts:
-//   system = [...env, ...instructions, ...(skills ? [skills] : [])]
+// packages/opencode/src/session/system.ts + instruction.ts + prompt.ts, as
+// verified directly against anomalyco/opencode's dev branch on 2026-08-30:
+//   system = [...env, ...instructions, ...(mcpInstructions ? [mcpInstructions] : []), ...(skills ? [skills] : [])]
 //   final  = [persona, ...system, userOverride].filter(Boolean).join("\n")
-// The environment-block wording and the assembly order/join are matched
-// exactly. What's simplified: persona() only ports 2 of the real 7 model
-// branches, instructions only checks AGENTS.md (real also checks CLAUDE.md /
-// CONTEXT.md / a global config path), skills() is hardcoded, and the
-// "project references" block is dropped entirely -- see each function below.
+// The environment-block wording and the final-assembly join are matched
+// exactly. What's simplified/dropped: persona() only ports 2 of the real
+// (currently 8, and growing -- opencode adds new model families over time)
+// dispatch branches; instructions only checks AGENTS.md (real also checks
+// CLAUDE.md / CONTEXT.md / a global config path); skills() is hardcoded;
+// the "project references" block and the newer `mcpInstructions` piece
+// (instructions injected by connected MCP servers -- didn't exist when this
+// was first written, added upstream since) are both dropped entirely.
+//
+// This file was checked against a live, actively-developed open source repo,
+// not a frozen spec -- some of the above (branch count, minor plumbing) will
+// drift further as opencode keeps shipping. The core mechanism (static
+// system prompt assembled from these buckets, user message never touches it)
+// is the stable, load-bearing claim; exact counts are not.
 //
 // Deviation: real opencode walks up from `process.cwd()` (wherever the user
 // opened the project). This demo walks up from the script's own directory
@@ -23,9 +33,10 @@ export type Model = { id: string; providerID: string }
 
 // -- 1. Base persona: hardcoded .txt file selected by model ID -------------
 // Real opencode: packages/opencode/src/session/system.ts `provider()` is a
-// 7-branch dispatch: gpt-4/o1/o3 -> BEAST, gpt+codex -> CODEX, other gpt ->
+// growing dispatch-by-substring function (8 branches as of 2026-08-30: a
+// newer "muse" family, gpt-4/o1/o3 -> BEAST, gpt+codex -> CODEX, other gpt ->
 // GPT, gemini- -> GEMINI, claude -> ANTHROPIC, trinity -> TRINITY, kimi ->
-// KIMI, else -> DEFAULT. This demo only ports 2 of those 7 branches
+// KIMI, else -> DEFAULT). This demo only ports 2 of those branches
 // (claude / default) -- same dispatch-by-substring pattern, fewer personas.
 function persona(model: Model): string {
   const dir = join(import.meta.dir, "prompts")

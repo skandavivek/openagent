@@ -1,7 +1,18 @@
-// Topic 10 driver (server half) -- real opencode's actual architecture:
-// "Server (HTTP + WebSocket) -- TUI and desktop app connect here; events
-// streamed reactively... every message part, every tool call, every
-// permission request... so the UI stays reactive without polling."
+// Topic 10 driver (server half) -- streams the topic-4 harness loop's events
+// live to a client, no polling, the same reactive-UI principle real opencode
+// relies on.
+//
+// CORRECTION: an earlier version of this comment claimed real opencode uses
+// WebSocket for exactly this "stream session/tool-call events to a UI" case.
+// Checked directly against the real source (packages/opencode/src/server/
+// routes/instance/httpapi/'s own AGENTS.md): that general event stream is
+// actually Server-Sent Events (SSE) there, a one-directional push, which is
+// arguably the better-fitting tool for this specific job. Real WebSocket
+// usage in opencode is scoped to exactly one feature -- the embedded
+// terminal (`pty`), which genuinely needs full-duplex (keystrokes flowing
+// client->server while output streams server->client, simultaneously). This
+// demo uses `ws` (matching opencode's real dependency) for a use case that,
+// in the real codebase, is actually handled by SSE instead.
 //
 // This runs the topic-4 harness loop, but instead of (only) console.log-ing
 // each HarnessEvent, it broadcasts them as JSON over a real WebSocket to
