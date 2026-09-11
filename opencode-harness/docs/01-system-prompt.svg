@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 600" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4a4a"></path>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="780" height="600" fill="#ffffff"></rect>
+
+  <text x="390" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">
+    System Prompt Assembly
+  </text>
+  <text x="390" y="49" text-anchor="middle" font-size="12.5" fill="#6b6b6b">
+    01-system-prompt/system-prompt.ts — matched to opencode's real assembly order
+  </text>
+
+  <!-- 5 static sources -->
+  <rect x="30" y="65" width="330" height="46" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="195" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Persona (.txt)</text>
+  <text x="195" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">anthropic.txt / gemini.txt / gpt.txt — per model family</text>
+
+  <rect x="30" y="122" width="330" height="46" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="195" y="141" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Environment block</text>
+  <text x="195" y="157" text-anchor="middle" font-size="11" fill="#6b6b6b">cwd, platform, date, model name</text>
+
+  <rect x="30" y="179" width="330" height="46" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="195" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">AGENTS.md / CLAUDE.md</text>
+  <text x="195" y="214" text-anchor="middle" font-size="11" fill="#6b6b6b">walked up from disk at session start</text>
+
+  <rect x="30" y="236" width="330" height="46" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="195" y="255" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Skills list</text>
+  <text x="195" y="271" text-anchor="middle" font-size="11" fill="#6b6b6b">from agent config</text>
+
+  <rect x="30" y="293" width="330" height="46" rx="9" fill="#f5f4f2" stroke="#9a9a9a" stroke-width="1.3" stroke-dasharray="4,3"></rect>
+  <text x="195" y="312" text-anchor="middle" font-size="13" font-weight="700" fill="#4a4a4a">User system override</text>
+  <text x="195" y="328" text-anchor="middle" font-size="11" fill="#6b6b6b">rare, passed via API</text>
+
+  <!-- merge box -->
+  <rect x="460" y="150" width="290" height="90" rx="10" fill="#fff8e6" stroke="#c9960f" stroke-width="1.6"></rect>
+  <text x="605" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#7a5c00">system[]</text>
+  <text x="605" y="202" text-anchor="middle" font-size="11.5" fill="#7a5c00">[...env, ...instructions,</text>
+  <text x="605" y="217" text-anchor="middle" font-size="11.5" fill="#7a5c00">...(skills ? [skills] : [])]</text>
+
+  <!-- fan-in lines from sources to merge -->
+  <path d="M360,88 C 420,88 420,195 460,195" fill="none" stroke="#4a4a4a" stroke-width="1.4" marker-end="url(#arrow)"></path>
+  <path d="M360,145 C 420,145 420,195 460,195" fill="none" stroke="#4a4a4a" stroke-width="1.4" marker-end="url(#arrow)"></path>
+  <path d="M360,202 C 420,202 420,195 460,195" fill="none" stroke="#4a4a4a" stroke-width="1.4" marker-end="url(#arrow)"></path>
+  <path d="M360,259 C 420,259 420,195 460,195" fill="none" stroke="#4a4a4a" stroke-width="1.4" marker-end="url(#arrow)"></path>
+  <path d="M360,316 C 420,316 420,195 460,195" fill="none" stroke="#9a9a9a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"></path>
+
+  <!-- user message -->
+  <rect x="30" y="400" width="330" height="50" rx="9" fill="#fbeceb" stroke="#da3743" stroke-width="1.5"></rect>
+  <text x="195" y="430" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1a1a1a">User message</text>
+
+  <rect x="460" y="400" width="290" height="50" rx="9" fill="#eafaf0" stroke="#2f9e44" stroke-width="1.6"></rect>
+  <text x="605" y="422" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a37">messages[]</text>
+  <text x="605" y="438" text-anchor="middle" font-size="11" fill="#1f7a37">growing history — NOT system[]</text>
+
+  <line x1="360" y1="425" x2="460" y2="425" stroke="#da3743" stroke-width="1.6" marker-end="url(#arrow)"></line>
+  <text x="410" y="416" text-anchor="middle" font-size="10.5" font-weight="700" fill="#da3743">goes here instead</text>
+
+  <!-- final API call -->
+  <rect x="260" y="500" width="260" height="60" rx="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.8"></rect>
+  <text x="390" y="524" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1a1a1a">LLM API call</text>
+  <text x="390" y="542" text-anchor="middle" font-size="11.5" fill="#6b6b6b">{ system, messages, tools }</text>
+
+  <path d="M580,240 C 580,470 430,470 430,500" fill="none" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow)"></path>
+  <path d="M605,450 C 605,480 400,480 400,500" fill="none" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow)"></path>
+
+</svg>

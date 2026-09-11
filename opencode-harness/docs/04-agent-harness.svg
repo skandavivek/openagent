@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4a4a"></path>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="780" height="420" fill="#ffffff"></rect>
+
+  <text x="390" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">
+    Agent Harness — a Reduce Loop, Not a Render Loop
+  </text>
+  <text x="390" y="52" text-anchor="middle" font-size="12.5" fill="#6b6b6b">
+    04-agent-harness/harness.ts — the explicit while-loop combining topics 1+2+3
+  </text>
+
+  <rect x="120" y="80" width="540" height="60" rx="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.7"></rect>
+  <text x="390" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a1a">state₀ = [ systemPrompt, userMessage ]</text>
+  <text x="390" y="126" text-anchor="middle" font-size="11.5" fill="#6b6b6b">the very first call — nothing has happened yet</text>
+
+  <line x1="390" y1="140" x2="390" y2="168" stroke="#4a4a4a" stroke-width="1.7" marker-end="url(#arrow4)"></line>
+
+  <rect x="90" y="170" width="600" height="70" rx="10" fill="#fff8e6" stroke="#c9960f" stroke-width="1.7"></rect>
+  <text x="390" y="198" text-anchor="middle" font-size="15" font-weight="700" fill="#7a5c00">stateₙ₊₁ = stateₙ + LLM_response(stateₙ) + tool_results(stateₙ)</text>
+  <text x="390" y="220" text-anchor="middle" font-size="11.5" fill="#7a5c00">impure — tool calls have real side effects that feed back into the next state</text>
+
+  <path d="M690,205 C 740,205 740,120 660,110" fill="none" stroke="#4a4a4a" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow4)"></path>
+  <text x="700" y="160" text-anchor="middle" font-size="10.5" fill="#6b6b6b" transform="rotate(90 700 160)">repeats</text>
+
+  <line x1="390" y1="240" x2="390" y2="268" stroke="#4a4a4a" stroke-width="1.7" marker-end="url(#arrow4)"></line>
+  <text x="405" y="260" font-size="11" fill="#6b6b6b">until</text>
+
+  <rect x="230" y="270" width="320" height="55" rx="10" fill="#eafaf0" stroke="#2f9e44" stroke-width="1.7"></rect>
+  <text x="390" y="303" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a37">stop_reason === "end_turn"</text>
+
+  <line x1="390" y1="325" x2="390" y2="350" stroke="#4a4a4a" stroke-width="1.7" marker-end="url(#arrow4)"></line>
+
+  <rect x="260" y="352" width="260" height="50" rx="10" fill="#fbeceb" stroke="#da3743" stroke-width="1.6"></rect>
+  <text x="390" y="382" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Return final reply</text>
+
+</svg>

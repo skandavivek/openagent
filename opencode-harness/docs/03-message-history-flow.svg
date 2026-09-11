@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 700" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4a4a"></path>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="780" height="700" fill="#ffffff"></rect>
+
+  <text x="390" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">
+    Message History — Full Request Flow
+  </text>
+  <text x="390" y="49" text-anchor="middle" font-size="12.5" fill="#6b6b6b">
+    03-message-history/message-history.ts — the user's message is the newest item in messages[]
+  </text>
+
+  <rect x="290" y="65" width="200" height="46" rx="9" fill="#fbeceb" stroke="#da3743" stroke-width="1.5"></rect>
+  <text x="390" y="93" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">User types message</text>
+
+  <line x1="390" y1="111" x2="390" y2="136" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+  <text x="405" y="128" font-size="10.5" fill="#6b6b6b">WebSocket send</text>
+
+  <rect x="290" y="138" width="200" height="42" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="164" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a1a1a">Server → prompt(input)</text>
+
+  <line x1="390" y1="180" x2="390" y2="205" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+
+  <rect x="270" y="207" width="240" height="46" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="228" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">Write user message to SQLite</text>
+  <text x="390" y="243" text-anchor="middle" font-size="10.5" fill="#6b6b6b">role: "user"</text>
+
+  <line x1="390" y1="253" x2="390" y2="278" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+
+  <rect x="270" y="280" width="240" height="46" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="301" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">Load full history from SQLite</text>
+  <text x="390" y="316" text-anchor="middle" font-size="10.5" fill="#6b6b6b">the new message is already in there</text>
+
+  <line x1="390" y1="326" x2="390" y2="351" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+
+  <rect x="270" y="353" width="240" height="42" rx="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="378" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">Assemble system prompt (static)</text>
+
+  <line x1="390" y1="395" x2="390" y2="420" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+
+  <rect x="240" y="422" width="300" height="46" rx="9" fill="#fff8e6" stroke="#c9960f" stroke-width="1.6"></rect>
+  <text x="390" y="444" text-anchor="middle" font-size="13" font-weight="700" fill="#7a5c00">LLM API call</text>
+  <text x="390" y="460" text-anchor="middle" font-size="11" fill="#7a5c00">{ system, messages, tools }</text>
+
+  <!-- branch -->
+  <line x1="390" y1="468" x2="390" y2="493" stroke="#4a4a4a" stroke-width="1.6" marker-end="url(#arrow3)"></line>
+
+  <polygon points="390,497 500,540 390,583 280,540" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></polygon>
+  <text x="390" y="535" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1a1a1a">text or</text>
+  <text x="390" y="550" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1a1a1a">tool-call?</text>
+
+  <!-- text branch -->
+  <line x1="280" y1="540" x2="150" y2="540" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#arrow3)"></line>
+  <text x="165" y="530" font-size="10.5" font-weight="700" fill="#2f9e44">text token</text>
+  <rect x="10" y="515" width="140" height="50" rx="9" fill="#eafaf0" stroke="#2f9e44" stroke-width="1.4"></rect>
+  <text x="80" y="536" text-anchor="middle" font-size="11" font-weight="700" fill="#1f7a37">Stream to TUI</text>
+  <text x="80" y="552" text-anchor="middle" font-size="10" fill="#1f7a37">over WebSocket</text>
+
+  <!-- tool branch -->
+  <line x1="500" y1="540" x2="630" y2="540" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#arrow3)"></line>
+  <text x="555" y="530" font-size="10.5" font-weight="700" fill="#da3743">tool-call</text>
+  <rect x="632" y="515" width="140" height="50" rx="9" fill="#fbeceb" stroke="#da3743" stroke-width="1.4"></rect>
+  <text x="702" y="536" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">Tool.execute(args)</text>
+  <text x="702" y="552" text-anchor="middle" font-size="10" fill="#6b6b6b">real MCP / builtin</text>
+
+  <line x1="702" y1="565" x2="702" y2="600" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#arrow3)"></line>
+  <rect x="602" y="602" width="170" height="46" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.4"></rect>
+  <text x="687" y="623" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">Append tool result</text>
+  <text x="687" y="638" text-anchor="middle" font-size="10" fill="#6b6b6b">to SQLite history</text>
+
+  <path d="M602,625 C 420,625 420,468 390,468" fill="none" stroke="#da3743" stroke-width="1.7" marker-end="url(#arrow3)"></path>
+  <text x="480" y="660" text-anchor="middle" font-size="11" font-weight="700" fill="#da3743">loop continues until stop_reason === "end_turn"</text>
+
+</svg>

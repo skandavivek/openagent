@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 640" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="780" height="640" fill="#ffffff"></rect>
+
+  <text x="390" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">
+    Where Persistence Sits in the Stack
+  </text>
+  <text x="390" y="49" text-anchor="middle" font-size="12.5" fill="#6b6b6b">
+    08-drizzle-sqlite/db-demo.ts — bottom-up, matching opencode's real layering
+  </text>
+
+  <!-- layers, bottom drawn first conceptually but listed top..bottom visually as stack -->
+  <rect x="90" y="70" width="600" height="58" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">TUI / Desktop</text>
+  <text x="390" y="112" text-anchor="middle" font-size="11" fill="#6b6b6b">React-based terminal UI or Electron shell</text>
+
+  <rect x="90" y="136" width="600" height="58" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="157" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Server (HTTP + SSE)</text>
+  <text x="390" y="174" text-anchor="middle" font-size="10.5" fill="#6b6b6b">GET /event — TUI/desktop connect here; WebSocket is scoped only to the pty tool</text>
+
+  <rect x="90" y="202" width="600" height="58" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="226" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Agent loop</text>
+  <text x="390" y="244" text-anchor="middle" font-size="11" fill="#6b6b6b">streams LLM response, handles tool calls, loops until done</text>
+
+  <rect x="90" y="268" width="600" height="58" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="292" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Tool Registry</text>
+  <text x="390" y="310" text-anchor="middle" font-size="11" fill="#6b6b6b">assembles builtin + MCP + plugin tools before the loop starts</text>
+
+  <rect x="90" y="334" width="600" height="58" rx="9" fill="#f5f4f2" stroke="#1a1a1a" stroke-width="1.5"></rect>
+  <text x="390" y="358" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a">Provider layer</text>
+  <text x="390" y="376" text-anchor="middle" font-size="11" fill="#6b6b6b">abstracts Anthropic / OpenAI / Gemini via the Vercel AI SDK</text>
+
+  <rect x="90" y="400" width="600" height="58" rx="9" fill="#eafaf0" stroke="#2f9e44" stroke-width="1.7"></rect>
+  <text x="390" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a37">Session</text>
+  <text x="390" y="442" text-anchor="middle" font-size="11" fill="#1f7a37">one conversation thread — ID, model, cost/token counters, parent/child links</text>
+
+  <rect x="90" y="466" width="600" height="58" rx="9" fill="#eafaf0" stroke="#2f9e44" stroke-width="1.7"></rect>
+  <text x="390" y="490" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a37">SQLite (Drizzle ORM)</text>
+  <text x="390" y="508" text-anchor="middle" font-size="11" fill="#1f7a37">sessions, messages, tool parts, projects — stored locally</text>
+
+  <rect x="90" y="532" width="600" height="58" rx="9" fill="#fff8e6" stroke="#c9960f" stroke-width="1.7"></rect>
+  <text x="390" y="556" text-anchor="middle" font-size="13" font-weight="700" fill="#7a5c00">Effect-TS runtime</text>
+  <text x="390" y="574" text-anchor="middle" font-size="11" fill="#7a5c00">typed errors, DI via Layer/Context, composable lifecycles</text>
+
+  <text x="390" y="620" text-anchor="middle" font-size="11" fill="#6b6b6b">topic 8 = the two highlighted layers (Session + SQLite), trimmed to a two-table schema</text>
+
+</svg>
