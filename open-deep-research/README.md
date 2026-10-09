@@ -10,7 +10,27 @@ Deep research has broken out as one of the most popular agent applications. [Ope
 
 ## 🚀 Quickstart 
 
-### Prerequisites
+> [!IMPORTANT]
+> **Using the course Codespace? Everything is already installed. Skip all of the
+> Prerequisites and Installation steps below.**
+>
+> The Codespace has already set up Python 3.11, `uv`, Node.js/`npx` (for the MCP
+> server in notebook 3), and every Python package these notebooks need, including
+> Jupyter, in one shared `.venv` at the **repo root** (not inside `open-deep-research/`).
+> Do **not** run `uv sync`, `pip install`, `brew install`, `git clone`, or anything
+> else from the "Local setup" section.
+>
+> In the Codespace you only need to:
+> 1. Put your API keys in the `.env` at the **repo root** (one level above this folder).
+>    These notebooks need `OPENAI_API_KEY` and `TAVILY_API_KEY`, plus `LANGSMITH_API_KEY`
+>    for the eval cells. See the example in step 3 below.
+> 2. Open a notebook in `notebooks/` and choose the **`.venv` (Python 3.11)** kernel
+>    from the repo root.
+> 3. Run the cells.
+
+### Local setup (only if you are NOT using the Codespace)
+
+#### Prerequisites
 
 - **Node.js and npx** (required for MCP server in notebook 3):
 ```bash
@@ -39,7 +59,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="/Users/$USER/.local/bin:$PATH"
 ```
 
-### Installation
+#### Installation
 
 1. Clone the repository:
 ```bash
@@ -52,7 +72,7 @@ cd deep_research_from_scratch
 uv sync
 ```
 
-3. Create a `.env` file in the project root with your API keys:
+3. Create a `.env` file at the **repo root** (one level above `open-deep-research/`, shared by all projects) with your API keys:
 ```bash
 # Create .env file
 touch .env

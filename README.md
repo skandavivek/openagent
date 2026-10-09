@@ -15,6 +15,24 @@ Each folder has its own README with the details of that project. This
 top-level README only covers what's shared: the Codespace and the combined
 dependency setup.
 
+> [!IMPORTANT]
+> **Using the Codespace? Everything is already installed. Do NOT run any install commands.**
+>
+> When the Codespace is created it automatically installs everything all three
+> projects need: Python 3.11, `uv`, every Python package (including Jupyter) in
+> one shared `.venv` at the repo root, Node.js/`npx`, Bun, and `ripgrep`.
+> Wait for the "postCreateCommand" setup to finish on first launch (a few minutes),
+> then you're ready.
+>
+> **Skip** every `uv sync`, `pip install`, `brew install`, `npm install`,
+> `bun install`, `git clone` or "Prerequisites" step you see in this repo,
+> including the ones in the sub-project READMEs. Those are only for running
+> **locally, outside the Codespace**.
+>
+> All you need to do is:
+> 1. Add your API keys to the `.env` at the repo root (see [below](#one-env-shared-by-all-three)).
+> 2. When you open a notebook, pick the **`.venv` (Python 3.11)** kernel from the repo root.
+
 ## Codespace / local setup
 
 There is **one** combined dependency environment for the whole repo,
@@ -25,7 +43,8 @@ installed by `.devcontainer/devcontainer.json`'s `postCreateCommand` (see
 - **Bun/TypeScript** (`opencode-harness/`): its own `package.json`, `bun install`, plus `ripgrep` (needed by its real `grep`/`glob` tools).
 
 ```bash
-bash .devcontainer/post-create.sh   # what the Codespace runs automatically on creation
+# LOCAL ONLY. The Codespace already ran this for you on creation; don't re-run it there.
+bash .devcontainer/post-create.sh
 ```
 
 The script also auto-switches off `master` onto a throwaway `codespace/...`
