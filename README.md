@@ -1,6 +1,6 @@
 # openagent
 
-AI agent course repo. One Codespace, three case studies:
+AI agent course repo. One Codespace, four case studies:
 
 ```
 openagent/
@@ -8,6 +8,7 @@ openagent/
 ├── pyproject.toml          # combined Python dependencies (uv-managed)
 ├── openrestaurant/         # restaurant-booking agent: FastAPI + real MCP server + SQLite + evals
 ├── open-deep-research/     # deep-research agent tutorials (exact copy of langchain-ai/deep_research_from_scratch for now — will be adapted into agent + observability case studies, e.g. LangSmith vs. Langfuse, week by week)
+├── rag-from-scratch/       # RAG optimization (Ch3 of RAG-From-Scratch): basic vs. markdown parsing vs. re-ranking vs. hybrid search, with LLM-judge + DeepEval evals; only needs OPENAI_API_KEY
 └── opencode-harness/       # agent harness engineering: 12 topics on opencode's real stack (Bun/TypeScript/Effect/Drizzle/AI SDK) — system prompt, tools, message history, the loop, permissions, compaction, sub-agents, persistence, WebSocket streaming, MCP client, observability
 ```
 
@@ -18,7 +19,7 @@ dependency setup.
 > [!IMPORTANT]
 > **Using the Codespace? Everything is already installed. Do NOT run any install commands.**
 >
-> When the Codespace is created it automatically installs everything all three
+> When the Codespace is created it automatically installs everything all four
 > projects need: Python 3.11, `uv`, every Python package (including Jupyter) in
 > one shared `.venv` at the repo root, Node.js/`npx`, Bun, and `ripgrep`.
 > Wait for the "postCreateCommand" setup to finish on first launch (a few minutes),
@@ -30,7 +31,7 @@ dependency setup.
 > **locally, outside the Codespace**.
 >
 > All you need to do is:
-> 1. Add your API keys to the `.env` at the repo root (see [below](#one-env-shared-by-all-three)).
+> 1. Add your API keys to the `.env` at the repo root (see [below](#one-env-shared-by-all-projects)).
 > 2. When you open a notebook, pick the **`.venv` (Python 3.11)** kernel from the repo root.
 
 ## Codespace / local setup
@@ -39,7 +40,7 @@ There is **one** combined dependency environment for the whole repo,
 installed by `.devcontainer/devcontainer.json`'s `postCreateCommand` (see
 `.devcontainer/post-create.sh`) — two toolchains, one Codespace:
 
-- **Python** (`openrestaurant/`, `open-deep-research/`): root `pyproject.toml`, `uv sync` into one shared `.venv`.
+- **Python** (`openrestaurant/`, `open-deep-research/`, `rag-from-scratch/`): root `pyproject.toml`, `uv sync` into one shared `.venv`.
 - **Bun/TypeScript** (`opencode-harness/`): its own `package.json`, `bun install`, plus `ripgrep` (needed by its real `grep`/`glob` tools).
 
 ```bash
@@ -62,17 +63,23 @@ exact copy of the source repo) for reference; the Codespace itself only
 uses the root `pyproject.toml`, so there's a single set of installed Python
 dependencies, not two.
 
-## One `.env`, shared by all three
+## One `.env`, shared by all projects
 
 A single `.env` at this repo's root covers `openrestaurant/`,
-`open-deep-research/`, and `opencode-harness/` — not three separate files:
+`open-deep-research/`, `rag-from-scratch/` and `opencode-harness/`, not separate per-project files:
 
 ```bash
 cat > .env << 'EOF'
+# openrestaurant/, opencode-harness/
 ANTHROPIC_API_KEY=sk-ant-...
 LANGFUSE_SECRET_KEY=sk-lf-...
 LANGFUSE_PUBLIC_KEY=pk-lf-...
 LANGFUSE_BASE_URL=https://cloud.langfuse.com
+
+# open-deep-research/ (OPENAI also covers rag-from-scratch/)
+OPENAI_API_KEY=sk-...
+TAVILY_API_KEY=tvly-...
+LANGSMITH_API_KEY=lsv2_...   # optional, for the eval cells
 EOF
 ```
 

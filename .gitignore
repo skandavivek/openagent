@@ -16,3 +16,7 @@ open-deep-research/credentials.json
 # opencode-harness
 opencode-harness/node_modules/
 opencode-harness/**/*.db
+
+# rag-from-scratch
+rag-from-scratch/.deepeval/
+.deepeval/

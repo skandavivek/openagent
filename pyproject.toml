@@ -1,7 +1,7 @@
 [project]
 name = "openagent"
 version = "0.1.0"
-description = "AI Agents for Enterprise — openrestaurant/ (restaurant-booking demo) and open-deep-research/ (deep research agent tutorials), one combined codespace environment"
+description = "AI Agents for Enterprise — openrestaurant/ (restaurant-booking demo), open-deep-research/ (deep research agent tutorials) and rag-from-scratch/ (RAG optimization), one combined codespace environment"
 requires-python = ">=3.11"
 dependencies = [
     # open-deep-research
@@ -27,6 +27,17 @@ dependencies = [
     "mcp>=1.0.0",
     "python-dotenv>=1.0.0",
     "langfuse>=2.0.0",
+    # rag-from-scratch (only OPENAI_API_KEY needed; Qdrant runs in-memory, parsing/sparse embeddings run locally)
+    "llama-index-core>=0.14.25",
+    "llama-index-vector-stores-qdrant>=0.10.4",
+    "llama-index-embeddings-openai>=0.7.0",
+    "llama-index-llms-openai>=0.8.2",
+    "fastembed>=0.9.0",
+    "pymupdf>=1.28.2",
+    "pymupdf4llm>=1.28.2",
+    "deepeval>=4.2.8",
+    "pandas>=3.0.6",
+    "nest-asyncio>=1.6.0",
 ]
 
 [project.optional-dependencies]
